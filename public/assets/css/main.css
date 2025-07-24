@@ -227,7 +227,19 @@ h1 {
     top: -100px;
     z-index: -1;
   }
-
+  .spotify-login {
+    padding: 12px 24px;
+    font-size: 20px;
+    background-color: #1DB954;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .spotify-login:hover {
+    background-color: #1ed760;
+  }
 
   @media (max-width: 768px) {
 
