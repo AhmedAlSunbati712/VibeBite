@@ -17,7 +17,7 @@ const openai = new OpenAI({
  * 
  * @returns {Promise<string[]>} Array of recommended song strings
  */
-export async function getRecommendedSongs({ mood, topGenres = [], topArtists = [], topTracks = [] }) {
+export async function getRecommendedSongs(mood, topGenres = [], topArtists = [], topTracks = []) {
   try {
     const systemPrompt = {
       role: "system",

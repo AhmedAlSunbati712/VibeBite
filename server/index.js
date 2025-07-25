@@ -1,6 +1,7 @@
 import express from "express";
 import axios from "axios";
 import path from "path";
+import cors from 'cors';
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { config } from "dotenv";
@@ -22,15 +23,14 @@ let accessToken;
 
 const app = express();
 const port = 3000;
-
-
+app.use(express.json());
+app.use(cors());
 app.use(express.static(path.resolve(__DIRNAME, "..", "public")));
 
 const K = 8
 let userTopTracks = [];
 let userTopArtists = [];
 let userTopKGenres = [];
-
 
 app.get("/", (req, res) => {
     console.log("hit /");
@@ -73,39 +73,33 @@ app.get('/callback', async (req, res) => {
         res.status(500).send("Error Authorizing user.");
     }
     
-    if (typeof accessToken === "undefined") {
-        console.error("Error Authorizing user. Couldn't get access token.")
-    } else {
-        try {
-            userTopTracks = await spotifyAPI.getTopKTracks("long_term", 10, accessToken);
-            userTopArtists = await spotifyAPI.getTopKArtists("long_term", 10, accessToken);
 
-            let topTracksTitles = spotifyAPI.getTracksTitles(userTopTracks);
-            let topArtistsTitles = spotifyAPI.getArtistsTitles(userTopArtists);
-            userTopKGenres = await spotifyAPI.getTopKGenres(5, accessToken);
-            let mood = "hot sex playlist";
-            const recommendedSongs = await getRecommendedSongs({
-                mood,
-                topGenres: userTopKGenres,
-                topArtists: topArtistsTitles,
-                topTracks: topTracksTitles,
-              });
-            
-
-            // const topTracks = userTopTracks.map(
-            //       (t, i) => `${i + 1}. ${t.name} - ${t.artists.map(a => a.name).join(', ')}`
-            //  ).join('\n');
-          
-            //  res.send(`<pre>${topTracks}</pre>`);
-            res.send(`<pre>${recommendedSongs.join("\n")}</pre>`);
-        } catch (err) {
-            console.error(err.response?.data || err.message);
-            res.status(500).send('Error fetching tracks and Artists');
-        }
+    try {
+        userTopTracks = await spotifyAPI.getTopKTracks("long_term", 10, accessToken);
+        userTopArtists = await spotifyAPI.getTopKArtists("long_term", 10, accessToken);
+        userTopKGenres = await spotifyAPI.getTopKGenres(5, accessToken);
+        res.redirect('http://localhost:5173/moodify')
+    } catch (err) {
+        console.error(err.response?.data || err.message);
+        res.status(500).send('Error fetching tracks and Artists');
     }
+    
           
 });
 
+app.post('/moodify', async (req, res) => {
+    var mood = req.body.prompt;
+    var userTopArtistsTitles = spotifyAPI.getArtistsTitles(userTopArtists);
+    var userTopTracksTitles = spotifyAPI.getTracksTitles(userTopTracks);
+    var recommendedSongs = await getRecommendedSongs(mood, userTopKGenres, userTopArtistsTitles, userTopTracksTitles);
+
+    var tracksObjs = await Promise.all(
+        recommendedSongs.map(
+          (songTitle) => spotifyAPI.getTracksByTitle([songTitle], accessToken)
+        )
+      );
+    res.json(tracksObjs);
+})
 
 app.listen(port, () => {
     console.log(`Server running at http://127.0.0.1:${port}`);
