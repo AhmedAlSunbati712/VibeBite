@@ -33,6 +33,7 @@ let userTopKGenres = [];
 
 
 app.get("/", (req, res) => {
+    console.log("hit /");
     res.sendFile(path.join(__DIRNAME, "..", "public", "index.html"));
 })
 
