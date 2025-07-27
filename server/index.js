@@ -176,7 +176,7 @@ app.post('/moodify', async (req, res) => {
   // The mood description the user entered in the prompt
   const { prompt: mood } = req.body;
   const { userTopArtists, userTopTracks, userTopKGenres, accessToken } = req.session;
-  console.log(req.session);
+  console.log(userTopArtists);
   // Try connecting to openAI API and get recommended songs
   try {
     const recommendedTitles = await getRecommendedSongs(
