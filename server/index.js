@@ -87,6 +87,7 @@ app.get('/callback', async (req, res) => {
     // Saving authorization code to retrieve access token
     const { code } = req.query;
     const codeVerifier = req.session.codeVerifier; // get it from session
+    console.log(codeVerifier);
 
     if (!code || !codeVerifier) {
       return res.status(400).send("Missing authorization code or code verifier.");
