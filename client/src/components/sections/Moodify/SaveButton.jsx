@@ -4,7 +4,7 @@ import axios from "axios";
 function SaveButton(props) {
     const handleSavePlaylist = async () => {
         try {
-          const res = await axios.post("http://127.0.0.1:3000/savePlaylist", {
+          const res = await axios.post("https://vibebite.onrender.com/savePlaylist", {
             name: props.playlistName,
           }, {
             withCredentials: true
