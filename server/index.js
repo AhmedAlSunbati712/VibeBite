@@ -70,6 +70,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
+    partitioned: false,
     secure: true,        
     sameSite: 'None',     
     maxAge: 3600000
