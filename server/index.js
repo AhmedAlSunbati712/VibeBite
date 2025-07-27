@@ -27,7 +27,7 @@ import axios from "axios";
 import path from "path";
 import cors from 'cors';
 import session from 'express-session';
-import connectRedisFunc from 'connect-redis';
+import * as connectRedis from 'connect-redis';
 import Redis from 'ioredis';
 import { config } from "dotenv";
 import spotifyAPI from "./utils/spotifyAPI.js";
@@ -46,8 +46,7 @@ const CLIENT_URL = process.env.CLIENT_URL;
 const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
 const redisClient = new Redis(process.env.REDIS_URL);
-const RedisStore = connectRedisFunc(session);
-
+const RedisStore = connectRedis.default(session);
 
 /* <------------------- Middleware -----------------> */
 app.use(cors({
