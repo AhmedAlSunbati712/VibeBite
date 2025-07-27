@@ -27,7 +27,7 @@ function MusicColumn(props) {
               </div>
             </div> */}
         </div>
-        <img src="../src/assets/music.jpg" alt="" className="img-fluid object-fit-cover" />
+        <img src="/assets/music.jpg" alt="" className="img-fluid object-fit-cover" />
         </div>
     )
 }

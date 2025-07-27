@@ -32,7 +32,7 @@ function FoodColumn() {
             </div>
           </div> */}
         </div>
-        <img src="../src/assets/food.jpg" alt="" className="img-fluid object-fit-cover" />
+        <img src="/assets/food.jpg" alt="" className="img-fluid object-fit-cover" />
       </div>
     )
 }
