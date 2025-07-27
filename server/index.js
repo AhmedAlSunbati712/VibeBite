@@ -68,6 +68,7 @@ app.get("/login", async (req, res) => {
   // Generate a secure, random code verifier (used for PKCE)
   const codeVerifier = generateCodeVerifier(128);
   req.session.codeVerifier = codeVerifier;
+  console.log(req.session);
 
   // Generate a code challenge (hash of the code verifier, using SHA-256)
   generateCodeChallenge(codeVerifier).then(codeChallenge => {
