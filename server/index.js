@@ -46,7 +46,7 @@ const CLIENT_URL = process.env.CLIENT_URL;
 const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
 const redisClient = new Redis(process.env.REDIS_URL);
-const RedisStore = connectRedis.default(session);
+const RedisStore = connectRedis(session);
 
 /* <------------------- Middleware -----------------> */
 app.use(cors({
