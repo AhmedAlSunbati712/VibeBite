@@ -40,8 +40,8 @@ const app = express();
 const port = 3000;
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID; // Loading client ID from the environment variables
 const SCOPE = 'user-top-read playlist-modify-public playlist-modify-private'; // Defining scopes for authorization on spotify API
-const CLIENT_URL = "http://127.0.0.1:5173";
-const redirect_uri = "http://127.0.0.1:3000/callback"; // The redirect uri from spotify after authorization
+const CLIENT_URL = process.env.CLIENT_URL;
+const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
 
 
