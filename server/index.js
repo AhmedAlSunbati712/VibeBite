@@ -46,7 +46,11 @@ const CLIENT_URL = process.env.CLIENT_URL;
 const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
 const redisClient = createClient({
-  url: process.env.REDIS_URL, // your redis url
+  url: process.env.REDIS_URL,
+  socket: {
+    tls: true,                   // Enable TLS explicitly
+    rejectUnauthorized: true,    // Keep true for production security
+  }, // your redis url
 });
 redisClient.connect().catch(console.error);
 
