@@ -70,6 +70,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: {
+    partitioned: true,
     secure: true,        
     sameSite: 'None',     
     maxAge: 3600000
@@ -96,7 +97,7 @@ app.get("/login", async (req, res) => {
   // Generate a secure, random code verifier (used for PKCE)
   const codeVerifier = generateCodeVerifier(128);
   req.session.codeVerifier = codeVerifier;
-  console.log(req.session);
+  
 
   // Generate a code challenge (hash of the code verifier, using SHA-256)
   generateCodeChallenge(codeVerifier).then(codeChallenge => {
@@ -158,7 +159,7 @@ app.get('/callback', async (req, res) => {
         req.session.userTopTracks = tracks;
         req.session.userTopArtists = artists;
         req.session.userTopKGenres = genres;
-        console.log(req.session);
+        
         // Redirecting after logging in to allow user to enter prompt
         res.redirect(`${CLIENT_URL}/?spotify=true`)
     } catch (err) {
