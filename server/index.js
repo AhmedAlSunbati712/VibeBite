@@ -170,9 +170,9 @@ app.get('/callback', async (req, res) => {
 });
 
 app.post('/moodify', async (req, res) => {
-  if (!isSessionValid(req.session)) {
-    return res.status(400).json({ error: "Session expired. Please re-authenticate." });
-  }
+  // if (!isSessionValid(req.session)) {
+  //   return res.status(400).json({ error: "Session expired. Please re-authenticate." });
+  // }
   // The mood description the user entered in the prompt
   const { prompt: mood } = req.body;
   const { userTopArtists, userTopTracks, userTopKGenres, accessToken } = req.session;
@@ -218,9 +218,9 @@ app.post("/savePlaylist", async (req, res) => {
 });
 
 app.post("/getRecipe", async (req, res) => {
-  if (!isSessionValid(req.session)) {
-     return res.status(400).json({ error: "Session expired. Please re-authenticate." });
-  }
+  // if (!isSessionValid(req.session)) {
+  //    return res.status(400).json({ error: "Session expired. Please re-authenticate." });
+  // }
   const BASE_URL = 'https://api.spoonacular.com/recipes/complexSearch';
   const { prompt: mood }= req.body;
   const recipesRecs = await getRecommendedRecipes(mood);
