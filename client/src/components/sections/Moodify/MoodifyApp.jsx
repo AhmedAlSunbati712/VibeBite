@@ -16,13 +16,13 @@ function MoodifyApp() {
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            const response = await axios.post("http://127.0.0.1:3000/moodify", { prompt }, { withCredentials: true });
+            const response = await axios.post("https://vibebite.onrender.com/moodify", { prompt }, { withCredentials: true });
             setTracks(response.data);
         } catch (error) {
             console.error("Error fetching tracks: ", error);
         }
         try {
-            const response = await axios.post("http://127.0.0.1:3000/getRecipe", { prompt }, { withCredentials: true });
+            const response = await axios.post("https://vibebite.onrender.com/getRecipe", { prompt }, { withCredentials: true });
             setRecipes(response.data);
         } catch (error) {
             console.error("Error Fetching recipes: ", error);

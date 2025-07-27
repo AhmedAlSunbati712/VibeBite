@@ -58,7 +58,7 @@ function MoodifySection() {
         <div className='container pb-5'>
           <h2 className="display-4 mb-4">Ready to Vibe?</h2>
           <p className="lead mb-4">Connect your Spotify to get personalized music and meal matches.</p>
-          <a href="http://127.0.0.1:3000/login">
+          <a href="https://vibebite.onrender.com/login">
             <button type="button" className="btn btn-primary btn-lg spotify-login">
               Log in with Spotify
             </button>
