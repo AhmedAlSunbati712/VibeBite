@@ -1,0 +1,401 @@
+
+/* <---------- Header Section ----------> */
+
+.fixed-header {
+  position: fixed; /* <-- this is what makes it "stick" while scrolling */
+  top: 0;
+  left: 0;
+  width: 100%; /* ensure it spans the full width */
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+  .nav-link {
+    color: #33CC99;
+  }
+
+  .nav-link:hover {
+    color: #2baf83;
+  }
+
+  .nav-pills .nav-link.active {
+    background-color: #E8685B;
+    /* your desired active background */
+    color: white;
+    /* active text color */
+  }
+
+  .nav-link.active:hover {
+    background-color: #C94F45;
+  }
+
+
+
+  /* <------------- Hero Section -------------> */
+.hero-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 150px; /* adjust as needed */
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 70%, white 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-container {
+  position: relative;
+  z-index: 2;
+}
+
+.music-overlay-text,
+.food-overlay-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-family: "Righteous", sans-serif;
+  color: rgb(255, 255, 255);
+  top: 30%;
+  left: 32%;
+}
+
+.music-col,
+.food-col {
+  position: relative;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+  width: 100%;
+  height: 600px;
+}
+
+.hero-svg:hover {
+  filter: drop-shadow(0 0 8px #33CC99);
+  transform: scale(1.05);
+}
+
+.hero-svg {
+  transition: all 0.3s ease;
+}
+
+.log-in-music {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.log-out-btn {
+  background-color: #33CC99;
+  border: 0;
+}
+
+.log-out-btn:hover {
+  background-color: #2AA77F;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.log-out-btn:active:focus {
+  background-color: #1C6652;
+  
+}
+
+.sign-up-food {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-sign-up-btn {
+  background-color: #FF9F80;
+  border: 0;
+}
+
+.hero-sign-up-btn:hover {
+  background-color: #E8685B;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero-sign-up-btn:active:focus {
+  background-color: #C94F45;
+}
+
+.hero-sign-up-btn, .hero-log-in-btn {
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+  /* <-------------- Feautres Section --------------> */
+  .feature:hover {
+    filter: drop-shadow(0 0 8px #FF9F80);
+    transform: scale(1.05);
+  }
+  .feature {
+    transition: all 0.3s ease; 
+    z-index: 2;
+  }
+
+  #features-section {
+    position: relative;
+  }
+
+  .peach-circle {
+    background-color: #FF9F80;
+    position: absolute;
+  }
+  .teal-circle {
+    background-color: #33CC99;
+    position: absolute;
+  }
+  .circle-one {
+    width: 200px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    left: -100px;
+    top: -100px;
+    z-index: 1;
+  }
+  .circle-two {
+    width: 170px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    left: 80%;
+    top: 60%;
+    z-index: -1;
+  }
+  .circle-three {
+    width: 10px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    left: 50%;
+    top: -20%;
+    z-index: -1; 
+  }
+  .circle-four {
+    width: 30px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    left: 35%;
+    top: -14%;
+    z-index: -1; 
+  }
+  .circle-five {
+    width: 35px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    left: 65%;
+    top: -10%;
+    z-index: -1; 
+  }
+
+  .circle-six {
+    width: 200px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    left: 90%;
+    top: -100px;
+    z-index: -1;
+  }
+  .spotify-login {
+    padding: 12px 24px;
+    font-size: 20px;
+    background-color: #1DB954;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .spotify-login:hover {
+    background-color: #1ed760;
+  }
+
+  /* <-------------- About Section --------------> */
+  #about-section {
+    background-color: #33CC99;
+    
+  }
+
+  .section-divider-bottom {
+    margin-bottom: -2px;
+  }
+
+  .section-divider-top {
+    margin-bottom: +2px;
+  }
+
+
+  /* <------------------ Moodify section -------------> */
+  .input {
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: #e8e8e8;
+    box-shadow: 10px 10px 20px #E8685B;
+    width: 40%;
+    transition: box-shadow 0.4s ease-out, background 0.4s ease-out;
+  }
+  
+.input:focus {
+    outline: 2px solid #1DB954;
+    transition: outline 0.4s ease;
+    background: #dcdcdc; /* slightly darker */
+    box-shadow: 2px 2px 6px #a0a0a0, -2px -2px 6px #f0f0f0;
+}
+  
+.prompt-container {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-container {
+    width: 100%;
+    height: 500px; /* or adjust this value */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     
+  }
+  
+  .mySwiper {
+    width: 900px;
+    height: 500px; /* adjust this to fit your content */
+    padding-top: 60px;   /* add this */
+    padding-bottom: 60px; /* add this */
+    
+  }
+  
+  .song-card {
+    width: 250px;
+    height: 400px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: scale(0.9);
+    margin: 40px;
+    overflow: hidden;
+  }
+  
+  .swiper-slide-active .card {
+    opacity: 1;
+    filter: none;
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+  
+  .album-cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 15px;
+  }
+  
+  .song-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  
+  .artist {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+.carousel-svg {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+.album-cover {
+    transition: all 0.3s ease; 
+
+  }
+.album-cover:hover {
+    filter: drop-shadow(0 0 8px #FF9F80);
+    transform: scale(1.05);
+}
+
+/* <---------------- Recipe Cards ---------------> */
+.recipe-img {
+  width: 120px;
+  height: 120px;
+  border: 5px solid #2AA77F;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.recipe-img:hover {
+  transform: scale(1.05);
+  box-shadow: 5px 5px 8px #1d765a;
+}
+
+.recipe-title {
+font-family: 'Playfair Display', serif;
+font-size: 28px;
+}
+
+#ingredients, #instructions {
+  position: relative;
+  padding: 10px;
+}
+.ingredients li,
+.instructions li {     
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.recipe-card {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 8px 8px 10px #daa39d;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+  box-shadow: 8px 8px 10px #da867c;
+}
+
+.line-ingredients,
+.line-instructions {
+  position: absolute;
+  height: 3px;
+  width: 70px;
+  border-radius: 10px;
+  left: 26px;
+  top: 38px;
+}
+.line-ingredients {
+  background-color: #E8685B;
+}
+.line-instructions {
+  background-color: #2AA77F;
+}
+
+
+  @media (max-width: 768px) {
+
+    .hero-button-1 {
+      display: none;
+    }
+
+    .hero-button-2 {
+      display: block;
+    }
+  }
+
+  

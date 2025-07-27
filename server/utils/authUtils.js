@@ -1,3 +1,17 @@
+/**
+ * PKCE Utility Functions for Spotify Authorization
+ * 
+ * Author: Ahmed Al Sunbati
+ * 
+ * Description:
+ * Provides helper functions to generate a code verifier and code challenge
+ * used in the Spotify PKCE authorization flow for secure OAuth authentication.
+ * 
+ * Functions:
+ * - generateCodeVerifier: Creates a random string as the code verifier.
+ * - generateCodeChallenge: Creates a SHA-256 challenge from the verifier.
+ */
+
 export const generateCodeVerifier = (length) => {
     /**
      * Description: Generates a random code verifier string of a specified length.

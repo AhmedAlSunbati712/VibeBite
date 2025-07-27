@@ -1,3 +1,24 @@
+/**
+ * Spotify API Utilities
+ * 
+ * Author: Ahmed Al Sunbati
+ * 
+ * Description:
+ * Helper functions to interact with the Spotify Web API for retrieving user data,
+ * searching tracks, and managing playlists. Supports fetching top tracks, artists,
+ * genres, and creating playlists with recommended songs.
+ * 
+ * Functions:
+ * - getTopKTracks(timeRange, K, accessToken)
+ * - getTopKArtists(timeRange, K, accessToken)
+ * - getTopKGenres(K, accessToken)
+ * - getTracksTitles(tracksItems)
+ * - getArtistsTitles(artistsItems)
+ * - getTracksByTitle(tracksTitlesList, accessToken)
+ * - createPlaylist(tracksList, playlistTitle, accessToken)
+ * - addTracksToPlaylist(tracksList, playlistID, accessToken)
+ * - getUserID(accessToken)
+ */
 import axios from "axios";
 import {Heap} from "heap-js";
 
