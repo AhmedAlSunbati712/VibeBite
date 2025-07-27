@@ -27,8 +27,7 @@ import axios from "axios";
 import path from "path";
 import cors from 'cors';
 import session from 'express-session';
-import { createClient } from "redis";
-import { RedisStore } from "connect-redis";
+
 import { config } from "dotenv";
 import spotifyAPI from "./utils/spotifyAPI.js";
 import { generateCodeVerifier, generateCodeChallenge } from "./utils/authUtils.js";
@@ -45,19 +44,19 @@ const SCOPE = 'user-top-read playlist-modify-public playlist-modify-private'; //
 const CLIENT_URL = process.env.CLIENT_URL;
 const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
-const redisClient = createClient({
-  url: process.env.REDIS_URL,
-  socket: {
-    tls: true,                   // Enable TLS explicitly
-    rejectUnauthorized: true,    // Keep true for production security
-  }, // your redis url
-});
-redisClient.connect().catch(console.error);
+// const redisClient = createClient({
+//   url: process.env.REDIS_URL,
+//   socket: {
+//     tls: true,                   // Enable TLS explicitly
+//     rejectUnauthorized: true,    // Keep true for production security
+//   }, // your redis url
+// });
+// redisClient.connect().catch(console.error);
 
-const redisStore = new RedisStore({
-  client: redisClient,
-  prefix: "myapp:",
-});
+// const redisStore = new RedisStore({
+//   client: redisClient,
+//   prefix: "myapp:",
+// });
 
 
 /* <------------------- Middleware -----------------> */
@@ -66,29 +65,31 @@ app.use(cors({
   credentials: true,                
 }));
 app.use(express.json());
-// app.use(session({
-//   secret: process.env.SESSION_SECRET,
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: {
-//     secure: true,        
-//     sameSite: 'None',     
-//     maxAge: 3600000
-//   }
-// }));
-app.use(
-  session({
-    store: redisStore,
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      sameSite: 'None',
-      maxAge: 60 * 60 * 1000,
-    },
-  })
-);
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: true,        
+    sameSite: 'None',     
+    maxAge: 3600000
+  }
+}));
+// app.use(
+//   session({
+//     store: redisStore,
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       secure: true,
+//       sameSite: 'None',
+//       maxAge: 60 * 60 * 1000,
+//     },
+//   })
+// );
+app.set('trust proxy', 1);
+
 
 // Route to initiate the Spotify login process
 app.get("/login", async (req, res) => {
