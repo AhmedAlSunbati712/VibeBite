@@ -13,7 +13,7 @@ function FeaturesSection() {
 
         <div className="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
           <FeatureCard
-            bgImage="../src/assets/feature-1.jpg"
+            bgImage="/assets/feature-1.jpg"
             heading="Hungry and vibing? Find the perfect dish to match your mood"
             circles={[
               { color: 'peach', className: 'circle-one' },
@@ -25,7 +25,7 @@ function FeaturesSection() {
           />
 
           <FeatureCard
-            bgImage="../src/assets/feature-2.jpg"
+            bgImage="/assets/feature-2.jpg"
             heading="Customize suggestions with your top genres, artists, and diet."
             circles={[
               {
@@ -41,7 +41,7 @@ function FeaturesSection() {
           />
 
           <FeatureCard
-            bgImage="../src/assets/feature-3.jpg"
+            bgImage="/assets/feature-3.jpg"
             heading="Smart food and music matching based on your vibe"
             circles={[
               {
