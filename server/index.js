@@ -116,7 +116,7 @@ app.get('/callback', async (req, res) => {
     // Saving authorization code to retrieve access token
     const { code } = req.query;
     const codeVerifier = req.session.codeVerifier; // get it from session
-    console.log(req.session);
+    
 
     if (!code || !codeVerifier) {
       return res.status(400).send("Missing authorization code or code verifier.");
@@ -158,7 +158,7 @@ app.get('/callback', async (req, res) => {
         req.session.userTopTracks = tracks;
         req.session.userTopArtists = artists;
         req.session.userTopKGenres = genres;
-        
+        console.log(req.session);
         // Redirecting after logging in to allow user to enter prompt
         res.redirect(`${CLIENT_URL}/?spotify=true`)
     } catch (err) {
@@ -176,7 +176,7 @@ app.post('/moodify', async (req, res) => {
   // The mood description the user entered in the prompt
   const { prompt: mood } = req.body;
   const { userTopArtists, userTopTracks, userTopKGenres, accessToken } = req.session;
-
+  console.log(req.session);
   // Try connecting to openAI API and get recommended songs
   try {
     const recommendedTitles = await getRecommendedSongs(
