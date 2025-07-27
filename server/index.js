@@ -159,6 +159,7 @@ app.get('/callback', async (req, res) => {
         req.session.userTopTracks = tracks;
         req.session.userTopArtists = artists;
         req.session.userTopKGenres = genres;
+        console.log('Session ID:', req.sessionID);
         
         // Redirecting after logging in to allow user to enter prompt
         res.redirect(`${CLIENT_URL}/?spotify=true`)
@@ -175,6 +176,7 @@ app.post('/moodify', async (req, res) => {
   //   return res.status(400).json({ error: "Session expired. Please re-authenticate." });
   // }
   // The mood description the user entered in the prompt
+  console.log('Session ID:', req.sessionID);
   const { prompt: mood } = req.body;
   const { userTopArtists, userTopTracks, userTopKGenres, accessToken } = req.session;
   console.log(userTopArtists);
