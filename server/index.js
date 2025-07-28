@@ -44,20 +44,6 @@ const SCOPE = 'user-top-read playlist-modify-public playlist-modify-private'; //
 const CLIENT_URL = process.env.CLIENT_URL;
 const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
-// const redisClient = createClient({
-//   url: process.env.REDIS_URL,
-//   socket: {
-//     tls: true,                   // Enable TLS explicitly
-//     rejectUnauthorized: true,    // Keep true for production security
-//   }, // your redis url
-// });
-// redisClient.connect().catch(console.error);
-
-// const redisStore = new RedisStore({
-//   client: redisClient,
-//   prefix: "myapp:",
-// });
-
 
 /* <------------------- Variables to store information ------------> */
 
@@ -88,19 +74,6 @@ app.use(session({
   },
 }));
 
-// app.use(
-//   session({
-//     store: redisStore,
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       secure: true,
-//       sameSite: 'None',
-//       maxAge: 60 * 60 * 1000,
-//     },
-//   })
-// );
 
 
 // Route to initiate the Spotify login process
@@ -184,9 +157,7 @@ app.get('/callback', async (req, res) => {
 });
 
 app.post('/moodify', async (req, res) => {
-  // if (!isSessionValid(req.session)) {
-  //   return res.status(400).json({ error: "Session expired. Please re-authenticate." });
-  // }
+
   // The mood description the user entered in the prompt
   const { prompt: mood } = req.body;
 
@@ -214,7 +185,6 @@ app.post('/moodify', async (req, res) => {
 });
 
 app.post("/savePlaylist", async (req, res) => {
-  
 
   if (!mostRecentlyRecommendedSongs || !accessToken) {
     return res.status(400).json({ error: "Missing data in session. Try generating a playlist first." });
@@ -232,9 +202,7 @@ app.post("/savePlaylist", async (req, res) => {
 });
 
 app.post("/getRecipe", async (req, res) => {
-  // if (!isSessionValid(req.session)) {
-  //    return res.status(400).json({ error: "Session expired. Please re-authenticate." });
-  // }
+
   const BASE_URL = 'https://api.spoonacular.com/recipes/complexSearch';
   const { prompt: mood }= req.body;
   const recipesRecs = await getRecommendedRecipes(mood);
@@ -272,20 +240,6 @@ app.listen(port, () => {
 })
 
 /* <------------- Helper Functions ---------------> */
-function isSessionValid(session) {
-  /**
-   * Checks if the session has the required Spotify data.
-   *
-   * @param session - The user's session object.
-   * @returns True if session includes top tracks, artists, genres, and access token.
-   */
-  return (
-    session?.userTopTracks &&
-    session?.userTopArtists &&
-    session?.userTopKGenres &&
-    session?.accessToken
-  );
-}
 
 const getRecipeInformation = async (recipeID) => {
   /**
