@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -29,25 +29,7 @@ function MoodifyApp() {
         }
         setLoading(false);
     };
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get("code");
-      
-        if (code && !localStorage.getItem('spotify_logged_in')) {
-          axios.get(`https://vibebite.onrender.com/callback?code=${code}`, {
-            withCredentials: true,
-          })
-            .then(() => {
-              localStorage.setItem('spotify_logged_in', 'true');
-              window.history.replaceState({}, document.title, "/");
-              window.location.reload(); // or navigate if using react-router
-            })
-            .catch((err) => {
-              console.error("Spotify callback error:", err);
-            });
-        }
-      }, []);
-      
+    
 
     const handleLogout = () => {
       localStorage.removeItem('spotify_logged_in');

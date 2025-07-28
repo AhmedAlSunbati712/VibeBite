@@ -72,7 +72,7 @@ app.use(session({
   cookie: {
     partitioned: false,
     secure: true,        
-    sameSite: 'None',     
+    sameSite: 'none',     
     maxAge: 3600000
   }
 }));
@@ -162,8 +162,7 @@ app.get('/callback', async (req, res) => {
         console.log('Session ID:', req.sessionID);
         
         // Redirecting after logging in to allow user to enter prompt
-        res.status(200).json({ success: true });
-
+        res.redirect(`${CLIENT_URL}/?spotify=true`)
     } catch (err) {
         console.error(err.response?.data || err.message);
         res.status(500).send('Error fetching tracks and Artists');
