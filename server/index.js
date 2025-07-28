@@ -65,6 +65,8 @@ app.use(cors({
   credentials: true,                
 }));
 app.use(express.json());
+app.set('trust proxy', 1);
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -89,7 +91,6 @@ app.use(session({
 //     },
 //   })
 // );
-app.set('trust proxy', 1);
 
 
 // Route to initiate the Spotify login process
