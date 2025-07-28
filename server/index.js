@@ -194,7 +194,7 @@ app.post('/moodify', async (req, res) => {
   try {
     const recommendedTitles = await getRecommendedSongs(
       mood,
-      userTopKGenres,
+      topGenres,
       spotifyAPI.getArtistsTitles(topArtists),
       spotifyAPI.getTracksTitles(topTracks)
     );
