@@ -18,10 +18,6 @@ So I figured, why not build something better? An app that recommends music tailo
 ## The potential impact VibeBite has on its intended users
 This app has the potential to bring a small but meaningful boost to people's daily lives by meeting them where they are emotionally and practically. For users who often feel overwhelmed, creatively drained, or just in need of a little pick-me-up, it offers a personalized, low-effort way to engage with music and food, two of the most comforting aspects of daily life (at least mine).
 
-## New technologies I have learned
-Basically, almost the whole project is something new to me but not really. While I haven't taken CS52 myself, I was determined since the start of the summer to teach myself all the necessary technology stacks to deploy full-stack web applications. So I bought myself [The Complete Full-Stack Web Development Bootcamp](https://www.udemy.com/course/the-complete-web-development-bootcamp/?couponCode=KEEPLEARNING), read a lot and practiced a lot.
-
-
 ## APIs used
 ### Spoonacular API
 An API for searching for recipes using a multitutde of queries. Recipes can be searched for using name, ingredients, nutritients and cuisine. The app utilizes the free version of the API which allows for a 150 requests / day.
@@ -49,3 +45,29 @@ OpenAI API is used as a recommendation system that integrates information about 
 I picked up Axios while building this project. I hadn’t used it much before, but it ended up being super useful for handling all the HTTP requests between my backend and external APIs like Spotify and Spoonacular. I learned how to send requests with different headers and parameters, deal with things like authentication and rate limits, and generally make my API calls cleaner and more manageable.
 #### Why Axios?
 I went with Axios mainly because it made things easier to write and understand, especially compared to the built-in `fetch`. It handles things like JSON parsing automatically and has a more straightforward syntax when it comes to passing data or catching errors. Since I was working with a bunch of async calls (especially during the login flow and recommendation steps) Axios helped keep my code more readable and organized.
+## Challenges I faced (ones that I solved and others not)
+### Extracting A user's most listened to genres
+Spotify API doesn't provide a way to access the most-listened-to genres by the user. This is an essential part about the user's listening experience, and it also further helps the openAI API to normalize well instead of overfitting for a set group of artists.
+#### Solution
+The algorithm I used to tackle this challenge is as the following:
+```
+genresCount <- A dictionary that keeps the count of genres in the top artists
+for each artist in the top artists:
+    artist_genres <- extract the genres this artist is associated with
+    for each genre in artist_genres:
+        if genre is in genresCount: genresCount[genre] += 1
+        else: genresCount[genre] = 1
+maxHeap <- A heap which stores genres and orders them based on their count
+push each genre along with its count to the maxHeap
+pop the top of the heap k times to extract the most played genres
+```
+This approach could be optimized for space complexity by utilizing a minHeap and making sure its size doesn't grow beyond k.
+### Securely saving a user's session information (partially solved)
+One main issue I had to deal with was safely saving the user's access & refresh tokens and spotify data for the time they are in the session.
+#### Solution (solved only locally)
+I used `express-session` to temporarily store the user's code verifier during the OAuth flow, and to keep their Spotify access and refresh tokens after logging in. This let me reuse the tokens across different endpoints without needing to re-authenticate every time. It worked fine during local development where cookies can persist properly.
+
+##### Remaining issue (not working in deployment)
+
+When deploying, especially with cross-origin requests and HTTPS, I ran into problems where the session cookie wasn't being saved or sent back correctly. Despite setting `cookie: { secure: true, sameSite: 'None' }`, the session would reset between requests. I'm still figuring out the best long-term solution. possibly moving session data to a database like MongoDB or using JWTs instead of relying on in-memory sessions. The app works just fine now just because these variables are stored in global variables. The local version of the app (found on the branch `one-page`) functions properly with `express-session`.
+
