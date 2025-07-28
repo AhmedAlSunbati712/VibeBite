@@ -32,20 +32,22 @@ function MoodifyApp() {
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
-    
+      
         if (code && !localStorage.getItem('spotify_logged_in')) {
           axios.get(`https://vibebite.onrender.com/callback?code=${code}`, {
-            withCredentials: true
+            withCredentials: true,
           })
             .then(() => {
               localStorage.setItem('spotify_logged_in', 'true');
-              window.history.replaceState({}, document.title, "/"); // Remove ?code from URL
+              window.history.replaceState({}, document.title, "/");
+              window.location.reload(); // or navigate if using react-router
             })
-            .catch(err => {
-              console.error("Error during callback:", err);
+            .catch((err) => {
+              console.error("Spotify callback error:", err);
             });
         }
       }, []);
+      
 
     const handleLogout = () => {
       localStorage.removeItem('spotify_logged_in');
