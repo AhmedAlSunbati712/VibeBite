@@ -22,12 +22,12 @@ function AboutDisplay() {
         <div className="container mt-4">
             <div className="row">
                 
-                <div className="col-12 col-md-8 mb-4">
+                <div className="col-md-8 mb-4">
                     <SongCard trackInfo={trackInfo} />
                 </div>
 
                 
-                <div className="col-12 col-md-4 d-flex flex-column align-items-center">
+                <div className="col-md-4 d-flex flex-column align-items-center">
                     <img className="recipe-img mb-2 img-fluid" src="https://img.spoonacular.com/recipes/642281-556x370.jpg" alt="Eggplant Caprese Stack Appetizers" />
                     <h3 className="recipe-title text-center">Eggplant Caprese Stack Appetizers</h3>
                 </div>
