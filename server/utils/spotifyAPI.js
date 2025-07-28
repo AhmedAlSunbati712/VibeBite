@@ -192,7 +192,7 @@ const getTracksByTitle = async (tracksTitlesList, accessToken) => {
 }
 
 
-const createPlaylist = async (tracksList, playlistTitle, accessToken) => {
+const createPlaylist = async (tracksList, playlistTitle, playlistDescription, accessToken) => {
     /**
      * Description: This function creates a new playlist under the user's Spotify account,
      * then adds the given list of tracks to the newly created playlist.
@@ -213,6 +213,7 @@ const createPlaylist = async (tracksList, playlistTitle, accessToken) => {
             {
                 name: playlistTitle,
                 public: true,
+                description: playlistDescription,
             }, 
             {
                 headers: {Authorization: `Bearer ${accessToken}`},

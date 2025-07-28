@@ -222,7 +222,8 @@ app.post("/savePlaylist", async (req, res) => {
 
   try {
     var playlistName = req.body.name;
-    await spotifyAPI.createPlaylist(mostRecentlyRecommendedSongs, playlistName, accessToken);
+    var playlistDescription = req.body.description;
+    await spotifyAPI.createPlaylist(mostRecentlyRecommendedSongs, playlistName, playlistDescription, accessToken);
     res.status(200).json({ message: "Playlist created successfully!" });
   } catch (err) {
     console.error(err);
