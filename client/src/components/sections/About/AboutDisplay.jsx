@@ -19,7 +19,7 @@ function AboutDisplay() {
     }
     return (
         <div className="container col-12 col-lg-6 d-flex justify-content-center align-items-center">
-            <div className="col-md-8">
+            <div className="row">            <div className="col-md-8">
             <SongCard trackInfo={trackInfo}/>
             </div>
             <div className="container col-12 col-md-4 d-flex flex-column jusityf-content-center align-items-center">
@@ -27,6 +27,8 @@ function AboutDisplay() {
                 <h3 className="recipte-title text-center">Eggplant Caprese Stack Appetizers</h3>
 
             </div>
+            </div>
+
         </div>
     )
 }
