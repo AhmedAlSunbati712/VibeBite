@@ -27,6 +27,9 @@ import axios from "axios";
 import path from "path";
 import cors from 'cors';
 import session from 'express-session';
+import {RedisStore} from "connect-redis"
+import {createClient} from "redis"
+
 
 import { config } from "dotenv";
 import spotifyAPI from "./utils/spotifyAPI.js";
@@ -44,6 +47,15 @@ const SCOPE = 'user-top-read playlist-modify-public playlist-modify-private'; //
 const CLIENT_URL = process.env.CLIENT_URL;
 const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
+
+let redisClient = createClient()
+redisClient.connect().catch(console.error)
+
+// Initialize store.
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
 // const redisClient = createClient({
 //   url: process.env.REDIS_URL,
 //   socket: {
@@ -68,13 +80,14 @@ app.use(express.json());
 app.set('trust proxy', 1);
 
 app.use(session({
+  store: redisStore,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
     partitioned: false,
     secure: true,        
-    sameSite: 'none',     
+    sameSite: 'None',     
     maxAge: 3600000
   }
 }));
