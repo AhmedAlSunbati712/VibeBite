@@ -27,8 +27,7 @@ import axios from "axios";
 import path from "path";
 import cors from 'cors';
 import session from 'express-session';
-import {RedisStore} from "connect-redis"
-import {createClient} from "redis"
+import MongoStore from 'connect-mongo';
 
 
 import { config } from "dotenv";
@@ -47,15 +46,6 @@ const SCOPE = 'user-top-read playlist-modify-public playlist-modify-private'; //
 const CLIENT_URL = process.env.CLIENT_URL;
 const redirect_uri = process.env.REDIRECT_URI; // The redirect uri from spotify after authorization
 const K = 50; // How many top artists/tracks to extract
-
-let redisClient = createClient()
-redisClient.connect().catch(console.error)
-
-// Initialize store.
-let redisStore = new RedisStore({
-  client: redisClient,
-  prefix: "myapp:",
-})
 // const redisClient = createClient({
 //   url: process.env.REDIS_URL,
 //   socket: {
@@ -72,6 +62,12 @@ let redisStore = new RedisStore({
 
 
 /* <------------------- Middleware -----------------> */
+const mongoUri = process.env.MONGO_URI;
+const mongoStore = MongoStore.create({
+  mongoUrl: mongoUri,
+  collectionName: 'sessions',
+  ttl: 60 * 60, // 1 hour
+});
 app.use(cors({
   origin: CLIENT_URL,  
   credentials: true,                
@@ -80,17 +76,17 @@ app.use(express.json());
 app.set('trust proxy', 1);
 
 app.use(session({
-  store: redisStore,
+  store: mongoStore,
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
-    partitioned: false,
-    secure: true,        
-    sameSite: 'None',     
-    maxAge: 3600000
-  }
+    secure: true,
+    sameSite: 'None',
+    maxAge: 60 * 60 * 1000, // 1 hour
+  },
 }));
+
 // app.use(
 //   session({
 //     store: redisStore,
