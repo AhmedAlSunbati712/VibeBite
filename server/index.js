@@ -162,7 +162,8 @@ app.get('/callback', async (req, res) => {
         console.log('Session ID:', req.sessionID);
         
         // Redirecting after logging in to allow user to enter prompt
-        res.redirect(`${CLIENT_URL}/?spotify=true`)
+        res.status(200).json({ success: true });
+
     } catch (err) {
         console.error(err.response?.data || err.message);
         res.status(500).send('Error fetching tracks and Artists');

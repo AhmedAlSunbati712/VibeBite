@@ -29,6 +29,23 @@ function MoodifyApp() {
         }
         setLoading(false);
     };
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+    
+        if (code && !localStorage.getItem('spotify_logged_in')) {
+          axios.get(`https://vibebite.onrender.com/callback?code=${code}`, {
+            withCredentials: true
+          })
+            .then(() => {
+              localStorage.setItem('spotify_logged_in', 'true');
+              window.history.replaceState({}, document.title, "/"); // Remove ?code from URL
+            })
+            .catch(err => {
+              console.error("Error during callback:", err);
+            });
+        }
+      }, []);
 
     const handleLogout = () => {
       localStorage.removeItem('spotify_logged_in');
