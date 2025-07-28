@@ -27,8 +27,6 @@ import axios from "axios";
 import path from "path";
 import cors from 'cors';
 import session from 'express-session';
-import MongoStore from 'connect-mongo';
-
 
 import { config } from "dotenv";
 import spotifyAPI from "./utils/spotifyAPI.js";
@@ -61,13 +59,17 @@ const K = 50; // How many top artists/tracks to extract
 // });
 
 
+/* <------------------- Variables to store information ------------> */
+
+var accessToken;
+var refreshToken;
+var topTracks;
+var topArtists;
+var topGenres;
+var mostRecentlyRecommendedSongs;
+
 /* <------------------- Middleware -----------------> */
-const mongoUri = process.env.MONGO_URI;
-const mongoStore = MongoStore.create({
-  mongoUrl: mongoUri,
-  collectionName: 'sessions',
-  ttl: 60 * 60, // 1 hour
-});
+
 app.use(cors({
   origin: CLIENT_URL,  
   credentials: true,                
@@ -76,7 +78,6 @@ app.use(express.json());
 app.set('trust proxy', 1);
 
 app.use(session({
-  store: mongoStore,
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -147,8 +148,8 @@ app.get('/callback', async (req, res) => {
         );
         
         // Saving the access and refresh tokens in the session
-        req.session.accessToken = response.data.access_token;
-        req.session.refreshToken = response.data.refresh_token;
+        accessToken = response.data.access_token;
+        refreshToken = response.data.refresh_token;
 
     } catch (error) {
         console.error(error.response?.data || error.message);
@@ -158,7 +159,7 @@ app.get('/callback', async (req, res) => {
     
     // Fetch User Data
     try {
-        const accessToken = req.session.accessToken;
+        
         const [tracks, artists, genres] = await Promise.all([
           spotifyAPI.getTopKTracks("long_term", K, accessToken),
           spotifyAPI.getTopKArtists("long_term", K, accessToken),
@@ -166,13 +167,14 @@ app.get('/callback', async (req, res) => {
         ]);
 
         // Saving this information in the current user's session
-        req.session.userTopTracks = tracks;
-        req.session.userTopArtists = artists;
-        req.session.userTopKGenres = genres;
-        console.log('Session ID:', req.sessionID);
+        topTracks = tracks;
+        topArtists = artists;
+        topGenres = genres;
+        
         
         // Redirecting after logging in to allow user to enter prompt
         res.redirect(`${CLIENT_URL}/?spotify=true`)
+        
     } catch (err) {
         console.error(err.response?.data || err.message);
         res.status(500).send('Error fetching tracks and Artists');
@@ -186,17 +188,15 @@ app.post('/moodify', async (req, res) => {
   //   return res.status(400).json({ error: "Session expired. Please re-authenticate." });
   // }
   // The mood description the user entered in the prompt
-  console.log('Session ID:', req.sessionID);
   const { prompt: mood } = req.body;
-  const { userTopArtists, userTopTracks, userTopKGenres, accessToken } = req.session;
-  console.log(userTopArtists);
+
   // Try connecting to openAI API and get recommended songs
   try {
     const recommendedTitles = await getRecommendedSongs(
       mood,
       userTopKGenres,
-      spotifyAPI.getArtistsTitles(userTopArtists),
-      spotifyAPI.getTracksTitles(userTopTracks)
+      spotifyAPI.getArtistsTitles(topArtists),
+      spotifyAPI.getTracksTitles(topTracks)
     );
     
     // Build tracks objects from tracks titles
@@ -205,8 +205,8 @@ app.post('/moodify', async (req, res) => {
     );
     
     // Save the most revently recommended songs
-    req.session.mostRecentlyRecommendedSongs = trackObjs.flat();
-    res.json(req.session.mostRecentlyRecommendedSongs);
+    mostRecentlyRecommendedSongs = trackObjs.flat();
+    res.json(mostRecentlyRecommendedSongs);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to generate recommendations." });
@@ -214,7 +214,7 @@ app.post('/moodify', async (req, res) => {
 });
 
 app.post("/savePlaylist", async (req, res) => {
-  const { mostRecentlyRecommendedSongs, accessToken } = req.session;
+  
 
   if (!mostRecentlyRecommendedSongs || !accessToken) {
     return res.status(400).json({ error: "Missing data in session. Try generating a playlist first." });
