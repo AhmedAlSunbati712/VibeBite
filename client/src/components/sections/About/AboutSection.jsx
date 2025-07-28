@@ -29,7 +29,7 @@ function AboutSection() {
             <SongCard trackInfo={trackInfo} />
           </div>
 
-          <div className="col-12 col-md-4 mb-4 d-flex flex-column align-items-center">
+          <div className="col-12 col-md-4 mb-4 d-flex flex-column justify-content-center align-items-center">
             <img
               className="recipe-img mb-2 img-fluid"
               src="https://img.spoonacular.com/recipes/642281-556x370.jpg"
