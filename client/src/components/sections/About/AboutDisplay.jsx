@@ -23,7 +23,7 @@ function AboutDisplay() {
             <SongCard trackInfo={trackInfo}/>
             </div>
             <div className="container d-flex flex-column jusityf-content-center align-items-center">
-                <img className="recipe-img mb-2" src="https://img.spoonacular.com/recipes/642281-556x370.jpg" alt="" />
+                <img className="recipe-img col-12 col-md-4 mb-2" src="https://img.spoonacular.com/recipes/642281-556x370.jpg" alt="" />
                 <h3 className="recipte-title text-center">Eggplant Caprese Stack Appetizers</h3>
 
             </div>
