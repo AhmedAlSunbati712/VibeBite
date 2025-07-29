@@ -15,7 +15,7 @@ This repo is my project for the API challenge as part of my application to DALI 
 so if you need to have access to be able to test the app yourself, send me an email and I'll add your email to the white list on the dashboard.
 
 # Computer Demo
-![](computer_demo.mov)
+[![](computer_demo.mov)](https://github.com/user-attachments/assets/2143429c-c73c-482a-ac69-b9f2a42b4649)
 
 # Idea Inspiration
 As much as I love curating playlists and putting care into crafting the perfect vibe, there are times when I desperately want something fresh, but have zero energy to make it myself. Sure, Spotify DJ exists, but let’s be honest: it’s basically useless when it starts blasting Taylor Swift while I’m spiraling into an existential crisis.
